@@ -1,0 +1,28 @@
+logging:
+  level:
+    org.springframework.kafka: INFO
+    org.apache.kafka.streams: INFO
+
+spring:
+  kafka:
+    streams:
+      properties:
+        default.deserialization.exception.handler: org.springframework.kafka.support.serializer.LogAndContinueExceptionHandler
+      bootstrap-servers: localhost:9092
+      application-id: streams-app
+
+  kafka-streams:
+    application-id: kafka-streams-app
+    bindings:
+      input:
+        destination: TOPIC_A, TOPIC_B
+        consumer:
+          keySerde: org.springframework.kafka.support.serializer.JsonSerde
+          valueSerde: org.springframework.kafka.support.serializer.JsonSerde
+
+      output:
+        destination: TOPIC_C
+        producer:
+          keySerde: org.springframework.kafka.support.serializer.JsonSerde
+          valueSerde: org.springframework.kafka.support.serializer.JsonSerde
+
