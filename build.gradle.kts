@@ -29,9 +29,15 @@ dependencies {
 	implementation("org.apache.kafka:kafka-streams")
 	implementation("com.fasterxml.jackson.core:jackson-databind")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	testImplementation("junit:junit:4.13.1")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	// Add Lombok dependency
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
+
+	// SLF4J and Logback dependencies
+	implementation("org.slf4j:slf4j-api:1.7.30")
+	implementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 tasks.withType<Test> {

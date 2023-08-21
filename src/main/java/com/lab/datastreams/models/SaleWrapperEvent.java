@@ -2,6 +2,8 @@ package com.lab.datastreams.models;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Represents a wrapper event containing both registration and sale events.
  * <p>
@@ -26,8 +28,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class SaleWrapperEvent {
-    private CustomKey key;
+@ToString
+public class SaleWrapperEvent implements Serializable {
     private RegistrationEvent registrationEvent;
     private SaleEvent saleEvent;
+
 }

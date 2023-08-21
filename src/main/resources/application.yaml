@@ -2,6 +2,7 @@ logging:
   level:
     org.springframework.kafka: INFO
     org.apache.kafka.streams: INFO
+    com.lab.datastreams: DEBUG
 
 spring:
   kafka:

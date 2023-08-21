@@ -1,8 +1,11 @@
 package com.lab.datastreams.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 /**
  * Represents a registration event.
@@ -30,15 +33,25 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class RegistrationEvent {
-    private CustomKey key;
+@ToString
+@JsonSerialize
+@JsonDeserialize
+public class RegistrationEvent implements Serializable {
+    private Key key;
+
     private boolean is_selling;
 
     private String catalog_number;
     private String model;
+
     private String product_id;
+
     private String registration_id;
+
     private String registration_number;
-    private LocalDateTime selling_status_date;
+
+    private String selling_status_date;
     private String country;
+
+    private Audit auditl;
 }

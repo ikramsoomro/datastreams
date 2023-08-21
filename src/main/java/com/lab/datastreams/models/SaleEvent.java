@@ -1,8 +1,11 @@
 package com.lab.datastreams.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 /**
  * Represents a sale event.
@@ -27,12 +30,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class SaleEvent {
-    private CustomKey key;
+@ToString
+@JsonSerialize
+@JsonDeserialize
+public class SaleEvent implements Serializable {
+    private Key key;
 
     private String catalog_number;
+
     private String order_number;
     private String quantity;
-    private LocalDateTime sales_date;
+
+    private String sales_date;
     private String country;
+
+    private Audit auditl;
 }

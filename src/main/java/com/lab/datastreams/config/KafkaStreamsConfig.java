@@ -1,7 +1,13 @@
 package com.lab.datastreams.config;
 
 
+import com.lab.datastreams.util.JsonPOJODeserializer;
+import com.lab.datastreams.util.JsonPOJOSerializer;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -25,7 +31,28 @@ public class KafkaStreamsConfig {
         properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19092");
         properties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, JsonSerde.class.getName());
         properties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, JsonSerde.class.getName());
-        // Add other Kafka Streams properties here
+
+
+        //properties.put("spring.kafka.producer.key-serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        //properties.put("spring.kafka.producer.value-serializer", "org.springframework.kafka.support.serializer.JsonSerializer");
+
+        // Add these lines to your existing KafkaStreamsConfig class
+
+        properties.put("spring.kafka.producer.key-serializer", StringSerializer.class.getName());
+        properties.put("spring.kafka.producer.value-serializer", JsonPOJOSerializer.class.getName());
+
+        properties.put("spring.kafka.consumer.key-deserializer", StringDeserializer.class.getName());
+        properties.put("spring.kafka.consumer.value-deserializer", JsonPOJODeserializer.class.getName());
+
+
+        properties.put("spring.kafka.consumer.auto-offset-reset", "earliest");
+        properties.put("spring.json.trusted.packages", "com.lab.datastreams.models");
+        properties.put("spring.kafka.consumer.properties.spring.json.trusted.packages", "com.lab.datastreams.models");
+
+
+        // Add the default.deserialization.exception.handler property
+        properties.put(StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG,
+                LogAndContinueExceptionHandler.class.getName());
 
         return new KafkaStreamsConfiguration(properties);
     }
