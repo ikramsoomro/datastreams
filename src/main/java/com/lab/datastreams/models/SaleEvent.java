@@ -1,6 +1,5 @@
 package com.lab.datastreams.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
@@ -31,8 +30,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@JsonSerialize
-@JsonDeserialize
 public class SaleEvent implements Serializable {
     private Key key;
 
@@ -44,5 +41,5 @@ public class SaleEvent implements Serializable {
     private String sales_date;
     private String country;
 
-    private Audit auditl;
+    private Audit audit;
 }

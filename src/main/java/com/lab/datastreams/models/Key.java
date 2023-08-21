@@ -24,8 +24,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-@JsonSerialize
-@JsonDeserialize
 public class Key implements Serializable {
 
     private String catalog_number;

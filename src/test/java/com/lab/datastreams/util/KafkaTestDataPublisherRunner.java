@@ -24,14 +24,14 @@ public class KafkaTestDataPublisherRunner {
 
             switch (dataType) {
                 case "positive":
-                    testDataPublisher.populateKafkaTopics(300, 2, 2, false);  // Modify duration and interval as needed
+                    testDataPublisher.populateKafkaTopics(300, 5, 1, false);  // Modify duration and interval as needed
                     break;
                 case "negative":
-                    testDataPublisher.populateKafkaTopics(300,2, 2, true);  // Modify duration and interval as needed
+                    testDataPublisher.populateKafkaTopics(300,5, 1, true);  // Modify duration and interval as needed
                     break;
                 default:
-                    testDataPublisher.populateKafkaTopics(300, 2, 2, false);  // Modify duration and interval as needed
-                    testDataPublisher.populateKafkaTopics(300,2, 2, true);  // Modify duration and interval as needed
+                    testDataPublisher.populateKafkaTopics(300, 8, 2, false);  // Modify duration and interval as needed
+                    testDataPublisher.populateKafkaTopics(300,8, 2, true);  // Modify duration and interval as needed
                     break;
             }
         } else {

@@ -62,35 +62,77 @@ public class TestDataGenerator {
     }
 
     public RegistrationEvent generateInvalidRegistrationEvent() {
-        String invalidCatalog = String.valueOf(random.nextInt(1000));  // Catalog number with less than 5 digits
         LocalDateTime dateTime = LocalDateTime.now();
 
+        String catalog = String.valueOf(random.nextInt(100000));  // assuming valid catalog is 5 digits
+        String countryCode = "001";
+        String registrationType = "REG" + random.nextInt(10000);
+
+        // Randomly choose a field to invalidate
+        int choice = random.nextInt(9);  // 0 to 8 inclusive
+
+        switch (choice) {
+            case 0:
+                catalog = String.valueOf(random.nextInt(1000)); // Catalog number with less than 5 digits
+                break;
+            case 1:
+                countryCode = INVALID_COUNTRY_CODE;
+                break;
+            case 2:
+                registrationType = "INVALID" + random.nextInt(10000);
+                break;
+            // ... Add invalidation for other fields similarly ...
+            default:
+                // Can default to any invalidation or leave as is
+                break;
+        }
+
         return new RegistrationEvent(
-                new Key(invalidCatalog, INVALID_COUNTRY_CODE),
+                new Key(catalog, countryCode),
                 true,
-                invalidCatalog,
-                invalidCatalog,
+                catalog,
+                catalog,
                 "int" + random.nextInt(10000),
                 "int" + random.nextInt(10000),
-                "REG" + random.nextInt(10000),
+                registrationType,
                 dateTime.format(DATE_FORMATTER),
-                INVALID_COUNTRY_CODE,
+                countryCode,
                 new Audit("Registration", "RGR")
         );
     }
 
     public SaleEvent generateInvalidSaleEvent() {
-        String invalidCatalog = String.valueOf(random.nextInt(1000));  // Catalog number with less than 5 digits
-        String invalidDateTime = "invalidDateTimeFormat";
         LocalDateTime dateTime = LocalDateTime.now();
 
+        String catalog = String.valueOf(random.nextInt(100000));  // assuming valid catalog is 5 digits
+        String countryCode = "001";
+
+        // Randomly choose a field to invalidate
+        int choice = random.nextInt(6);  // 0 to 5 inclusive
+
+        switch (choice) {
+            case 0:
+                catalog = String.valueOf(random.nextInt(1000)); // Catalog number with less than 5 digits
+                break;
+            case 1:
+                countryCode = INVALID_COUNTRY_CODE;
+                break;
+            case 2:
+                dateTime = null; // Invalid date
+                break;
+            // ... Add invalidation for other fields similarly ...
+            default:
+                // Can default to any invalidation or leave as is
+                break;
+        }
+
         return new SaleEvent(
-                new Key(invalidCatalog, INVALID_COUNTRY_CODE),
-                invalidCatalog,
+                new Key(catalog, countryCode),
+                catalog,
                 String.valueOf(random.nextInt(10000)),
                 String.valueOf(random.nextInt(100)),
-                dateTime.format(DATE_FORMATTER),
-                INVALID_COUNTRY_CODE,
+                dateTime == null ? "invalidDateTimeFormat" : dateTime.format(DATE_FORMATTER),
+                countryCode,
                 new Audit("Sales Event", "SLS")
         );
     }
