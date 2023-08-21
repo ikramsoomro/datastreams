@@ -40,7 +40,7 @@ public class KafkaStreamsProcessor {
                     .filter((key, value) -> isValidFormat(value.getSelling_status_date())
                             && "001".equals(value.getCountry())
                             && isValidCatalogNumber(value.getCatalog_number()))
-                    //.peek((key, value) -> System.out.println(key + " - " + value))
+                    .peek((key, value) -> log.debug("Registration Event:: " + key + " - " + value))
                     .selectKey((key, value) -> value.getKey());
 
             // Materialized store for the KTable
@@ -55,10 +55,10 @@ public class KafkaStreamsProcessor {
             // Explicit Serdes for TOPIC_B
             KStream<Key, SaleEvent> rekeySaleEventKStream = builder.stream("TOPIC_B",
                             Consumed.with(customKeySerde, saleEventSerde))
-                    //.peek((key, value) -> System.out.println(key + " - " + value))
                     .filter((key, value) -> isValidFormat(value.getSales_date())
                             && "001".equals(value.getCountry())
                             && isValidCatalogNumber(value.getCatalog_number()))
+                    .peek((key, value) -> log.debug("Sale Event :: " + key + " - " + value))
                     .selectKey((key, value) -> value.getKey());
 
             KStream<Key, SaleWrapperEvent> joinedStream = rekeySaleEventKStream
@@ -69,7 +69,7 @@ public class KafkaStreamsProcessor {
                     );
 
             joinedStream
-                    //.peek((key, value) -> System.out.println("Joined Stream: " + key + " - " + value))
+                    .peek((key, value) -> log.debug("Joined record : " + key + " - " + value))
                     .to("TOPIC_C", Produced.with(customKeySerde, saleWrapperEventJsonSerde));
     }
 }
